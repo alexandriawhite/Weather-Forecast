@@ -39,4 +39,4 @@
 * URL of deployed application: https://alexandriawhite.github.io/Weather-Forecast/
 
 ## 📝 Notes
-* 
+* GitHub will alert you if a token has been used in your repository: "GitGuardian has detected the following OpenWeatherMap Token exposed within your GitHub account". 
