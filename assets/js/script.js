@@ -18,7 +18,14 @@ function weather() {
         .then(function (data) {
             displayForecast(data)
             console.log(data)
-            localStorage.setItem("city",city) /*Need to update this to an array*/
+            localStorage.setItem("city", city) /*Need to update this to an array*/
+        })
+    fetch(weatherURLToday)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data)
         })
 }
 
@@ -35,28 +42,39 @@ function displayForecast(forecastData) {
             return false
         }
     })
-   filterForecast.forEach(day => {
-    let weatherCard = document.createElement("div")
-    let fiveDayWeather = document.createElement("h2")
-    let symbol = document.createElement("img")
-    let temp = document.createElement("p")
-    let wind = document.createElement("p")
-    let humidity = document.createElement("p")
-    let date = day.dt_txt.split(" ")[0]
-    let [year, month, dy] = date.split('-');
-    let formattedDate = [month, dy, year].join('/');
-    fiveDayWeather.textContent= formattedDate
-    symbol.setAttribute("src",`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`)
-    temp.textContent= `Temp: ${day.main.temp}°F`
-    wind.textContent=`Wind: ${day.wind.speed}MPH`
-    humidity.textContent=`Humidity: ${day.main.humidity}`
-    weatherCard.classList="forecastCard"
-    weatherCard.append(fiveDayWeather,symbol,temp,wind,humidity)
-    fiveDay.append(weatherCard)
-    
-   });
+    filterForecast.forEach(day => {
+        let weatherCard = document.createElement("div")
+        let fiveDayWeather = document.createElement("h2")
+        let symbol = document.createElement("img")
+        let temp = document.createElement("p")
+        let wind = document.createElement("p")
+        let humidity = document.createElement("p")
+        let date = day.dt_txt.split(" ")[0]
+        let [year, month, dy] = date.split('-');
+        let formattedDate = [month, dy, year].join('/');
+        fiveDayWeather.textContent = formattedDate
+        symbol.setAttribute("src", `http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`)
+        temp.textContent = `Temp: ${day.main.temp}°F`
+        wind.textContent = `Wind: ${day.wind.speed}MPH`
+        humidity.textContent = `Humidity: ${day.main.humidity}`
+        weatherCard.classList = "forecastCard"
+        weatherCard.append(fiveDayWeather, symbol, temp, wind, humidity)
+        fiveDay.append(weatherCard)
+    });
+    function today(todayInfo){
+        let todayContainer = document.createElement("div")
+        let cityPlusDate = document.createElement("p")
+        let todayTemp = document.createElement("p")
+        let todayWind = document.createElement("p")
+        let todayHumidity = document.createElement("p")
+        cityPlusDate.textContent = `day.name ${formattedDate}`
+        todayTemp.textContent =  `Temp: ${todayInfo.main.temp}°F`
+        todayWind.textContent = `Wind: ${todayInfo.wind.speed}MPH`
+        todayHumidity.textContent = `Humidity: ${todayInfo.main.humidity}`
+        todayContainer.append(cityPlusDate,todayTemp,todayWind,todayHumidity)
+        displayCityWeather.append(todayContainer)
 }
-
+}
 
 
 // Add event listener to search button
