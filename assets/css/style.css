@@ -38,7 +38,6 @@ height: 220px;
 font-size: 20px;
 font-family: "Roboto", sans-serif;
 border-radius: 8px;
-
 }
 
 /*Formatting for lower left content to be on the left side*/
@@ -63,7 +62,7 @@ border-radius: 8px;
     border: 1px solid blue;
     line-height: 8px;
     transform: scale(0.95);
-    width:100%;
+    width:75%;
 }
 
 #searchBtn:hover {
@@ -80,4 +79,15 @@ h2{
     font-weight: bolder;
     font-family: "Roboto", sans-serif;
     font-size: 30px;
+}
+
+#displayCityWeather {
+    border-style: solid;
+    margin-left: 27.5%;
+    margin-right: 3%;
+    margin-top:2%;
+}
+
+#displayCityWeather p {
+margin:1%;
 }

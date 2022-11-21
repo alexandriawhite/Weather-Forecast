@@ -4,10 +4,12 @@ const userInput = document.getElementById("userInput");
 const day = dayjs().format("MM/DD/YYYY");
 const displayCityWeather = document.getElementById("displayCityWeather");
 let fiveDay = document.querySelector(".fiveDay");
+let currentDay = dayjs().format("MM/DD/YYYY");
+
 
 
 function weather() {
-    let city = $("#userInput").val()
+    let city = $("#userInput").val();
     let weatherURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIkey}&units=imperial`
     let weatherURLToday = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}&units=imperial`
 
@@ -25,6 +27,7 @@ function weather() {
             return response.json();
         })
         .then(function (data) {
+            today(data)
             console.log(data)
         })
 }
@@ -55,27 +58,31 @@ function displayForecast(forecastData) {
         fiveDayWeather.textContent = formattedDate
         symbol.setAttribute("src", `http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`)
         temp.textContent = `Temp: ${day.main.temp}°F`
-        wind.textContent = `Wind: ${day.wind.speed}MPH`
-        humidity.textContent = `Humidity: ${day.main.humidity}`
+        wind.textContent = `Wind: ${day.wind.speed} MPH`
+        humidity.textContent = `Humidity: ${day.main.humidity} %`
         weatherCard.classList = "forecastCard"
         weatherCard.append(fiveDayWeather, symbol, temp, wind, humidity)
         fiveDay.append(weatherCard)
     });
-    function today(todayInfo){
-        let todayContainer = document.createElement("div")
-        let cityPlusDate = document.createElement("p")
-        let todayTemp = document.createElement("p")
-        let todayWind = document.createElement("p")
-        let todayHumidity = document.createElement("p")
-        cityPlusDate.textContent = `day.name ${formattedDate}`
-        todayTemp.textContent =  `Temp: ${todayInfo.main.temp}°F`
-        todayWind.textContent = `Wind: ${todayInfo.wind.speed}MPH`
-        todayHumidity.textContent = `Humidity: ${todayInfo.main.humidity}`
-        todayContainer.append(cityPlusDate,todayTemp,todayWind,todayHumidity)
-        displayCityWeather.append(todayContainer)
-}
+   
 }
 
+function today(todayInfo){
+    let city = $("#userInput").val();
+    let todayContainer = document.createElement("div")
+    let cityPlusDate = document.createElement("h2")
+    let symbol = document.createElement("img")
+    let todayTemp = document.createElement("p")
+    let todayWind = document.createElement("p")
+    let todayHumidity = document.createElement("p")
+    cityPlusDate.textContent = `${city} (${currentDay})`
+    todayTemp.textContent =  `Temp: ${todayInfo.main.temp}°F`
+    todayWind.textContent = `Wind: ${todayInfo.wind.speed} MPH`
+    todayHumidity.textContent = `Humidity: ${todayInfo.main.humidity} %`
+    symbol.setAttribute("src", `http://openweathermap.org/img/wn/${todayInfo.weather[0].icon}@2x.png`)
+    todayContainer.append(cityPlusDate,symbol,todayTemp,todayWind,todayHumidity)
+    displayCityWeather.append(todayContainer)
+}
 
 // Add event listener to search button
 searchBtn.addEventListener("click", weather);
