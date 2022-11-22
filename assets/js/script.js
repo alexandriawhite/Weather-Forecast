@@ -9,8 +9,7 @@ let currentDay = dayjs().format("MM/DD/YYYY");
 let searchKey = "searchKey"
 
 
-function weather() {
-    let city = $("#userInput").val();
+function weather(city) {
     let weatherURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIkey}&units=imperial`
     let weatherURLToday = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}&units=imperial`
     fetch(weatherURL)
@@ -25,11 +24,11 @@ function weather() {
             return response.json();
         })
         .then(function (data) {
-            today(data)
+            today(data,city)
             setLocalStorage(city)
         })  
 }
-
+/*5 day forecast section*/
 function displayForecast(forecastData) {
     let filterForecast = forecastData.list.filter((day) => {
         if (day.dt_txt.includes("15:00:00")) {
@@ -60,10 +59,9 @@ function displayForecast(forecastData) {
         fiveDay.append(weatherCard)
     });
 }
-
-function today(todayInfo){
+/*Today section*/
+function today(todayInfo,city){
     displayCityWeather.innerHTML="";
-    let city = $("#userInput").val();
     let todayContainer = document.createElement("div")
     let cityPlusDate = document.createElement("h2")
     let symbol = document.createElement("img")
@@ -71,7 +69,6 @@ function today(todayInfo){
     let todayWind = document.createElement("p")
     let todayHumidity = document.createElement("p")
     let fiveDayForecast = document.querySelector("h2")
-    let recentSearch = document.createElement("button")
     cityPlusDate.textContent = `${city} (${currentDay})`
     todayTemp.textContent =  `Temp: ${todayInfo.main.temp}°F`
     todayWind.textContent = `Wind: ${todayInfo.wind.speed} MPH`
@@ -80,28 +77,49 @@ function today(todayInfo){
     fiveDayForecast.className="fiveDayForecast"
     fiveDayForecast.textContent = `5-Day Forecast:`
     todayContainer.className= "displayCityWeather"
-    recentSearch.textContent=`${city}`
     todayContainer.append(cityPlusDate,symbol,todayTemp,todayWind,todayHumidity)
     displayCityWeather.append(todayContainer,fiveDayForecast) 
+
 }
+/*creating city buttons*/
+function citySearchBtn(){
+    citySearches.innerHTML=""
+    if (localStorage.getItem(searchKey) !== null){
+        let cities = localStorage.getItem(searchKey)
+        let citiesSearches = JSON.parse(cities)
+         citiesSearches.forEach(element => {
+    let recentSearches = document.createElement("button")
+    recentSearches.className ="recentSearches"
+    recentSearches.innerHTML=element
+    citySearches.append(recentSearches)})
+}};
 
-
-
+/*Checking if city is in array. If it is not, it's adding it*/
 function setLocalStorage(city) {
     if (localStorage.getItem(searchKey) !== null){
     let cities = localStorage.getItem(searchKey)
     let citiesSearches = JSON.parse(cities)
-    citiesSearches.push(city);
+    if (citiesSearches.includes(city)){
+    } else {citiesSearches.push(city);
+    }
     localStorage.setItem(searchKey, JSON.stringify(citiesSearches));
+    citySearchBtn();
     } else {
     let searches = []
     searches.push(city);
     localStorage.setItem(searchKey, JSON.stringify(searches));
+    citySearchBtn();
 }}
 
 
-
-
+/*Function for buttons for searched cities*/
+citySearchBtn();
 // Add event listener to search button
-searchBtn.addEventListener("click", weather);
-
+searchBtn.addEventListener("click", function(){
+    let city = $("#userInput").val().toUpperCase()
+    weather(city);
+});
+$(".citySearches").on("click", ".recentSearches", function(){
+    let city = $(this).text()
+    weather(city);
+})

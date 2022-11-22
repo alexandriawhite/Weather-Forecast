@@ -73,6 +73,12 @@ font-size: 20px;
 margin:10px;
 padding:10px;
 }
+h1{
+    font-weight: bolder;
+    font-family: "Roboto", sans-serif;
+    font-size: 30px;
+    margin: 1%;  
+}
 
 h2{
     font-weight: bolder;
@@ -94,4 +100,22 @@ margin:1%;
 
 .fiveDayForecast {
     margin-left:27.5%;
+}
+
+.recentSearches {
+    background-color:gray;
+    color: black;
+    height: 30px;
+    padding: 0 8px;
+    font-size: 20px;
+    font-weight: 400;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid gray;
+    line-height: 8px;
+    transform: scale(0.95);
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width:75%;
+
 }
