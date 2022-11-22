@@ -18,10 +18,9 @@ body {
 }
 
 .fiveDay {
-    margin: 0 50px 10px 50px;
+    margin: 0px 50px 10px 50px;
     position: absolute;
     right: 0;
-    top: 400px;
     width: 70%;
     display: flex;
     justify-content: space-between;
@@ -55,7 +54,7 @@ border-radius: 8px;
     color: white;
     height: 30px;
     padding: 0 8px;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 400;
     cursor: pointer;
     border-radius: 5px;
@@ -79,9 +78,10 @@ h2{
     font-weight: bolder;
     font-family: "Roboto", sans-serif;
     font-size: 30px;
+    margin: 1%;
 }
 
-#displayCityWeather {
+.displayCityWeather {
     border-style: solid;
     margin-left: 27.5%;
     margin-right: 3%;
@@ -90,4 +90,8 @@ h2{
 
 #displayCityWeather p {
 margin:1%;
+}
+
+.fiveDayForecast {
+    margin-left:27.5%;
 }

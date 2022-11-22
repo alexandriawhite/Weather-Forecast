@@ -10,7 +10,7 @@
 * Notes
 
 ## Description
-
+This dashboard allows users to search for current and future weather conditions for a specified city
 
 ### User Story
 > * AS A traveler
@@ -29,7 +29,7 @@
 > * THEN I am again presented with current and future conditions for that city
 
 ## Screenshot  
-![demo](./assets/images/)
+![weatherapp](./assets/images/weather.PNG)
 
 ## License
 * MIT License
